@@ -15,4 +15,6 @@ It relys on having the physical connection from an Arduino (I used an arduino Na
 
 The Arduino .ino code uses four max6675 chips with one type-K thermocouple each to plot the four temperatures live using the LivePlots.py script. 
 
+Below is an image of the four temperature sensors that were plotting. one of the sensors was broken when it arrived, giving the value of 0 for the top line with the blue triangles as shown.
+
 <img src="Four_temps_fig.png" class="img-responsive" alt=""> </div>
