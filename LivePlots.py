@@ -44,12 +44,14 @@ def makeFig():
     plt.plot(T4, "b^-")
     plt.xlabel("time")
     plt.ylabel("Temp")
+with open('Temperature_file.csv', mode='w') as Temperature_file:
+    Temperature_writer = csv.writer(Temperature_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    Temperature_writer.writerow([t_inc1, TN1, TN2, TN3, TN4])
 
 while True:
     try:
-        with open('Temperature_file.csv', mode='w') as Temperature_file:
+        with open('Temperature_file.csv', mode='a') as Temperature_file:
             Temperature_writer = csv.writer(Temperature_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            Temperature_writer.writerow([t_inc1, TN1, TN2, TN3, TN4])
 
             for i in range(50):
                 b = ser.readline()         # read a byte string
