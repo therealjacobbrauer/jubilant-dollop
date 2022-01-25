@@ -5,17 +5,22 @@ import numpy as np
 
 import matplotlib.pyplot as plt 
 from drawnow import *
+from datetime import datetime
+
+now = datetime.now()
+ 
+dt_string = now.strftime("%d/%m/%Y %H:%M:%S.%f")
 
 ser = serial.Serial('/dev/cu.usbserial-1410', 115200)
 time.sleep(2)
 
 # Read and record the data
 data =[]                       # empty list to store the data
-
-TN1 = "temp. inlet coil"
-TN2 = "temp. outlet coil"
-TN3 = "temp. inlet radiator"
-TN4 = "temp. outlet radiator"
+t_inc1 = "Time"
+TN1 = "Temp. inlet coil"
+TN2 = "Temp. outlet coil"
+TN3 = "Temp. inlet radiator"
+TN4 = "Temp. outlet radiator"
 
 Tarr = np.ones([])
 """
@@ -44,7 +49,7 @@ while True:
     try:
         with open('Temperature_file.csv', mode='w') as Temperature_file:
             Temperature_writer = csv.writer(Temperature_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            Temperature_writer.writerow([TN1, TN2, TN3, TN4])
+            Temperature_writer.writerow([t_inc1, TN1, TN2, TN3, TN4])
 
             for i in range(50):
                 b = ser.readline()         # read a byte string
@@ -56,8 +61,10 @@ while True:
                 T3.append(Tarr[2])
                 T4.append(Tarr[3])
 
-                Temperature_writer.writerow([Tarr[0], Tarr[1], Tarr[2], Tarr[3]])
-                print(T1, T2, T3, T4)
+                Temperature_writer.writerow([dt_string, Tarr[0], Tarr[1], Tarr[2], Tarr[3]])
+                now = datetime.now()
+                dt_string = now.strftime("%d/%m/%Y %H:%M:%S.%f")
+                print(dt_string, T1, T2, T3, T4)
 
                 data.append(string)           # add to the end of data list
                 time.sleep(0.1)            # wait (sleep) 0.1 seconds
